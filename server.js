@@ -2,10 +2,13 @@ import express from "express";
 import dotenv from "dotenv";
 import router from "./routes/surveyRoutes.js";
 import errorHandler from "./middleware/errorHandler.js";
+import connetDb from './configs/dbConnection.js';
 
 dotenv.config();
 
 const PORT = process.env.PORT || 5000;
+
+connetDb();
 
 const app = express();
 
