@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
-import router from "./routes/surveyRoutes.js";
+import surveyRouter from "./routes/surveyRoutes.js";
+import userRouter from "./routes/userRoutes.js";
 import errorHandler from "./middleware/errorHandler.js";
 import connetDb from './configs/dbConnection.js';
 
@@ -13,7 +14,8 @@ connetDb();
 const app = express();
 
 app.use(express.json());
-app.use("/api/v1/surveys", router);
+app.use("/api/v1/surveys", surveyRouter);
+app.use("/api/v1/users", userRouter);
 app.use(errorHandler);
 
 app.listen(PORT, () => {

@@ -17,7 +17,7 @@ const getAllSurveys = asyncHandler(async (req, res)=>{
 //@access Public
 const getASurvey = asyncHandler(async (req, res)=>{
     const fetchedSurvey = await Survey.findById(req.params.id);
-    if(fetchedSurvey.title == null || fetchedSurvey.title == undefined) {
+    if(!fetchedSurvey) {
         res.status(404);
         throw new Error("Survey not found.");
     }
@@ -47,7 +47,7 @@ const saveSurvey = asyncHandler(async (req, res)=>{
 //@access Public
 const updateSurvey = asyncHandler(async (req, res)=>{
     const fetchedSurvey = await Survey.findById(req.params.id);
-    if(fetchedSurvey.title == null || fetchedSurvey.title == undefined) {
+    if(!fetchedSurvey) {
         res.status(404);
         throw new Error("Survey not found.");
     }
@@ -65,7 +65,7 @@ const updateSurvey = asyncHandler(async (req, res)=>{
 //@access Public
 const deleteSurvey = asyncHandler(async (req, res)=>{
     const fetchedSurvey = await Survey.findById(req.params.id);
-    if(fetchedSurvey.title  == null || fetchedSurvey.title  == undefined) {
+    if(!fetchedSurvey) {
         res.status(404);
         throw new Error("Survey not found.");
     }
