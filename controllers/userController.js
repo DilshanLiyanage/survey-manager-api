@@ -3,6 +3,7 @@
 import asyncHandler from "express-async-handler";
 import User from '../models/userModel.js';
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 //@desc Register User
 //@route Get /api/v1/users/register
@@ -44,7 +45,26 @@ const registerUser = asyncHandler(async (req, res)=>{
 //@route Get /api/v1/users/login
 //@access Public
 const loginrUser = asyncHandler(async (req, res)=>{
-    res.json({message:"user login"});
+    const {email, password} = req.body;
+
+    const user = await User.findOne({email});
+    
+    //compare user 
+    if(user && (bcrypt.compare(password, user.password))){
+        const accessToken = jwt.sign(
+            {
+                username : user.username,
+                email: user.email,
+                id: user.id
+            },
+            process.env.ACCESS_TOKEN_SECRET,
+            {expiresIn:"1m"}
+        );
+        res.status(200).json({accessToken})
+    }else {
+        res.status(401);
+        throw new Error("username or password is incorrect.");
+    }
 });
 
 
@@ -52,7 +72,7 @@ const loginrUser = asyncHandler(async (req, res)=>{
 //@route Get /api/v1/users/register
 //@access Private
 const currentUser = asyncHandler(async (req, res)=>{
-    res.json({message:"user current"});
+    res.json(req.user);
 });
 
 
