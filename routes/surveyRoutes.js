@@ -1,8 +1,10 @@
 import express from "express";
 import { getAllSurveys, getASurvey, saveSurvey, updateSurvey, deleteSurvey } from "../controllers/surveyController.js";
-
+import validateToken from "../middleware/validateTokenHandler.js";
 
 const router = express.Router();
+
+router.use(validateToken);
 
 router.route("/").get(getAllSurveys);
 

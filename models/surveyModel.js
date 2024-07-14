@@ -2,6 +2,11 @@ import mongoose from 'mongoose';
 
 const surveySchema = mongoose.Schema(
 {
+    user_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: "User"
+    },
     title: {
         type: String,
         required: [true, "Please add title for survey."]
